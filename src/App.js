@@ -18,13 +18,14 @@ const App = () => {
     })
   }, [])
 
-  const addNote = (event) => {
+  const addNoteOrg = (event) => {
     event.preventDefault()
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
       important: Math.random() > 0.5,
-    }
+      lkm: 1
+      }
 
     noteService
       .create(noteObject)
@@ -53,6 +54,31 @@ const App = () => {
     })    
   }
 
+
+  const addNote = (event) => {
+    const note = notes.find(n => n.content === newNote)
+    if (typeof note == 'undefined') {
+      addNoteOrg(event)
+      }
+    else {
+      console.log(`${note.content} (${note.lkm + 1}),uusi:${newNote}`)
+      const changedNote = { ...note, lkm: note.lkm + 1}
+      noteService
+      .update(note.id, changedNote)
+      .then(returnedNote => {
+      setNotes(notes.map(n => n.id !== note.id ? n : returnedNote))
+      })
+      .catch(error => {
+      setErrorMessage(
+        `Note '${note.content}' was already removed from server`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    })    
+  }
+}
+
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
@@ -63,7 +89,8 @@ const App = () => {
   : notes.filter(note => note.important)
 
   return (
-    <div>
+    <div className="site-container">
+      <div className="site-content">
       <h1>Notes</h1>
       <Notification message={errorMessage} />
       <div>
@@ -87,6 +114,7 @@ const App = () => {
         />
         <button type="submit">save</button>
       </form>  
+      </div>
       <Footer />
     </div>
   )

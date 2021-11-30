@@ -9,6 +9,20 @@ h1 {
   font-size: 15px;
 }
 
+.site-container {
+/* Sisältää site-contentin ja footerin */  
+  display: flex;
+/* React-mukautus */  
+  min-height: 98vh;
+  flex-direction: column;
+  }
+
+.site-content {
+  flex: 1;
+}
+
+.note > button, form button {margin-left:10px;}
+
 .error {
   color: red;
   background: lightgrey;
