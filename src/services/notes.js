@@ -1,10 +1,10 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/notes'
 
-const getAll2 = () => {
+/*const getAll2 = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
-}
+}*/
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -27,6 +27,6 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-export default { 
-  getAll, create, update
-}
+const exports = {getAll, create, update}
+export default exports
+  

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
+import {Datalist,Button} from './components/Lomake'
 import noteService from './services/notes'
 
 const App = () => {
@@ -10,13 +11,16 @@ const App = () => {
   const [showAll, setShowAll] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  console.log(`rendering App,newNote:${newNote}`)
   useEffect(() => {
+    console.log(`running useEffect`)
     noteService
       .getAll()
       .then(initialNotes => {
       setNotes(initialNotes)
+      console.log(`muutettu notes-tilaa: ${initialNotes}`)
     })
-  }, [])
+    }, [])
 
   const addNoteOrg = (event) => {
     event.preventDefault()
@@ -41,7 +45,7 @@ const App = () => {
   
     noteService
     .update(id, changedNote)
-      .then(returnedNote => {
+    .then(returnedNote => {
       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
     })
     .catch(error => {
@@ -54,10 +58,10 @@ const App = () => {
     })    
   }
 
-
   const addNote = (event) => {
+    console.log(`running addNote,newNote:${newNote}`)
     const note = notes.find(n => n.content === newNote)
-    if (typeof note == 'undefined') {
+    if (!note) {
       addNoteOrg(event)
       }
     else {
@@ -77,17 +81,50 @@ const App = () => {
       }, 5000)
     })    
   }
-}
+} 
+
+  const checkDatalist = (value) => {
+    console.log(`checkDataList ${value}`)
+    /* Etsitään datalistalta */
+    const o = document.getElementById('valinnat').options;
+    //for (let item of o) console.log(`option:${item.value}`);
+    var options = [...o];  
+    const note = options.find(option => option.value === value)
+    if (note) {
+      console.log(`checkDatalist,note:${note.value}`);
+      
+      }
+    else console.log('Ei löytynyt datalistalta');
+    return (note ? true : false);
+    }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
-    setNewNote(event.target.value)
-  }
+    if (timerID) clearTimeout(timerID);
+    let value = event.target.value;
+    console.log(`handleNoteChange:${value}`);
+    setNewNote(value);
+    }
+
+  let timerID; 
+  const startInputTimer = (note) => {
+      timerID = setTimeout(() => {
+      checkDatalist(note)},2000)
+    }  
+  
+  if (newNote) startInputTimer(newNote); 
 
   const notesToShow = showAll
   ? notes
   : notes.filter(note => note.important)
 
+  if (newNote && checkDatalist(newNote)) {
+    console.log(`Valittu listalta,newNote:${newNote}`)
+    //console.log(`lomake.current:${lomake.current}`)
+    //lomake.current.submit()
+    document.getElementById('painike').click()
+    }   
+
+  //console.log(`Suoritetaan return:${newNote},${notes}`)
   return (
     <div className="site-container">
       <div className="site-content">
@@ -107,12 +144,13 @@ const App = () => {
             />
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input
+      <form id="lomake" onSubmit={addNote}>
+        <Datalist
           value={newNote}
           onChange={handleNoteChange}
+          notes={notes}
         />
-        <button type="submit">save</button>
+        <Button type="submit" text="save"/>
       </form>  
       </div>
       <Footer />
