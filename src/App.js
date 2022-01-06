@@ -24,8 +24,7 @@ const App = () => {
     })
     }, [])
 
-  useEffect(() => {
-  /* Uusi muistiinpano valmiiksi kirjoitettu. */
+  /*useEffect(() => {
   console.log(`running useEffect, valmis note:${readyNote}`);
   if (!readyNote) return;
   const note = loytyi(readyNote);
@@ -38,13 +37,13 @@ const App = () => {
     addNoteDelay(readyNote);
     setReadyNote('');
     }   
-  }, [readyNote])
+  }, [readyNote])*/
 
   const loytyi = teksti => {
     const note = notes.find(n => n.content.toUpperCase() === teksti.toUpperCase());
     return note;
     }
-
+ 
   const addNoteDelay = content => {
     const noteObject = {
       content: content,
@@ -133,7 +132,20 @@ const App = () => {
       timerID.current = setTimeout(() => {
         setReadyNote(note)},2500)
       }
-      
+    
+  if (readyNote) {
+    const note = loytyi(readyNote);
+    if (note) {
+      console.log(`Löytyi:${note.content} (${note.lkm + 1})`)
+      updateNoteDelay(note);
+      setReadyNote('');
+      }
+    else {
+      addNoteDelay(readyNote);
+      setReadyNote('');
+      }   
+    }
+
   const notesToShow = showAll
   ? notes
   : notes.filter(note => note.important)

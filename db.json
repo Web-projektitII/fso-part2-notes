@@ -44,7 +44,7 @@
       "content": "yksi",
       "date": "2021-11-30T18:13:51.758Z",
       "important": true,
-      "lkm": 26,
+      "lkm": 27,
       "id": 7
     },
     {
@@ -79,8 +79,15 @@
       "content": "Täysin uusi",
       "date": "2022-01-06T19:03:06.078Z",
       "important": true,
-      "lkm": 13,
+      "lkm": 15,
       "id": 22
+    },
+    {
+      "content": "Kaksi",
+      "date": "2022-01-06T20:49:19.568Z",
+      "important": true,
+      "lkm": 1,
+      "id": 23
     }
   ]
 }
