@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
@@ -8,12 +8,14 @@ import noteService from './services/notes'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
+  const [readyNote, setReadyNote] = useState('')
   const [showAll, setShowAll] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
+  let timerID = useRef(null);
 
   console.log(`rendering App,newNote:${newNote}`)
   useEffect(() => {
-    console.log(`running useEffect`)
+    console.log(`running useEffect, alustus`)
     noteService
       .getAll()
       .then(initialNotes => {
@@ -22,32 +24,81 @@ const App = () => {
     })
     }, [])
 
-  const addNoteOrg = (event) => {
-    event.preventDefault()
+  useEffect(() => {
+  /* Uusi muistiinpano valmiiksi kirjoitettu. */
+  console.log(`running useEffect, valmis note:${readyNote}`);
+  if (!readyNote) return;
+  const note = loytyi(readyNote);
+  if (note) {
+    console.log(`Löytyi:${note.content} (${note.lkm + 1})`)
+    updateNoteDelay(note);
+    setReadyNote('');
+    }
+  else {
+    addNoteDelay(readyNote);
+    setReadyNote('');
+    }   
+  }, [readyNote])
+
+  const loytyi = teksti => {
+    const note = notes.find(n => n.content.toUpperCase() === teksti.toUpperCase());
+    return note;
+    }
+
+  const addNoteDelay = content => {
     const noteObject = {
-      content: newNote,
+      content: content,
       date: new Date().toISOString(),
       important: Math.random() > 0.5,
       lkm: 1
       }
-
-    noteService
-      .create(noteObject)
-        .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
-        setNewNote('')
+    noteService.create(noteObject)
+      .then(returnedNote => {
+      setNotes(notes.concat(returnedNote))
+      setNewNote('')
+      alert(`Lisätty ${content}`)
       })
+    }
+
+  const updateNoteDelay = note => {
+    const id = note.id;
+    const lkm = (note.lkm) ? note.lkm + 1 : 2;
+    const changedNote = { ...note, lkm: lkm}
+    noteService.update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(n => n.id !== id ? n : returnedNote))
+        setNewNote('');  
+        alert(`Löytyi ${note.content}, nyt ${changedNote.lkm} kpl.`)
+        })
+      .catch(error => {
+        setErrorMessage(
+          `Note '${note.content}' was removed from server`
+          )
+        setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)  
+        })
+      }
+
+  const addNote = event => {
+    event.preventDefault();
+    if (timerID.current) clearTimeout(timerID.current)
+    if (!newNote) {
+      alert('Virhe: muistiinpano puuttuu.')
+      return;
+      }
+    const note = loytyi(newNote);
+    if (note) updateNoteDelay(note);
+    else addNoteDelay(newNote);
   }
 
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
-  
-    noteService
-    .update(id, changedNote)
+    noteService.update(id, changedNote)
     .then(returnedNote => {
       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
-    })
+      })
     .catch(error => {
       setErrorMessage(
         `Note '${note.content}' was already removed from server`
@@ -58,73 +109,35 @@ const App = () => {
     })    
   }
 
-  const addNote = (event) => {
-    console.log(`running addNote,newNote:${newNote}`)
-    const note = notes.find(n => n.content === newNote)
-    if (!note) {
-      addNoteOrg(event)
-      }
-    else {
-      console.log(`${note.content} (${note.lkm + 1}),uusi:${newNote}`)
-      const changedNote = { ...note, lkm: note.lkm + 1}
-      noteService
-      .update(note.id, changedNote)
-      .then(returnedNote => {
-      setNotes(notes.map(n => n.id !== note.id ? n : returnedNote))
-      })
-      .catch(error => {
-      setErrorMessage(
-        `Note '${note.content}' was already removed from server`
-      )
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    })    
-  }
-} 
-
-  const checkDatalist = (value) => {
+  /*const checkDatalist = (value) => {
     console.log(`checkDataList ${value}`)
-    /* Etsitään datalistalta */
     const o = document.getElementById('valinnat').options;
-    //for (let item of o) console.log(`option:${item.value}`);
     var options = [...o];  
     const note = options.find(option => option.value === value)
     if (note) {
-      console.log(`checkDatalist,note:${note.value}`);
-      
+      console.log(`checkDatalist,id:${note.key},note:${note.value}`);
       }
     else console.log('Ei löytynyt datalistalta');
-    return (note ? true : false);
-    }
+    return (note);
+    }*/
 
-  const handleNoteChange = (event) => {
-    if (timerID) clearTimeout(timerID);
+  const handleNoteChange = event => {
     let value = event.target.value;
+    startInputTimer(value);
     console.log(`handleNoteChange:${value}`);
     setNewNote(value);
     }
 
-  let timerID; 
-  const startInputTimer = (note) => {
-      timerID = setTimeout(() => {
-      checkDatalist(note)},2000)
-    }  
-  
-  if (newNote) startInputTimer(newNote); 
-
+  const startInputTimer = note => {
+      if (timerID.current) clearTimeout(timerID.current)
+      timerID.current = setTimeout(() => {
+        setReadyNote(note)},2500)
+      }
+      
   const notesToShow = showAll
   ? notes
   : notes.filter(note => note.important)
 
-  if (newNote && checkDatalist(newNote)) {
-    console.log(`Valittu listalta,newNote:${newNote}`)
-    //console.log(`lomake.current:${lomake.current}`)
-    //lomake.current.submit()
-    document.getElementById('painike').click()
-    }   
-
-  //console.log(`Suoritetaan return:${newNote},${notes}`)
   return (
     <div className="site-container">
       <div className="site-content">

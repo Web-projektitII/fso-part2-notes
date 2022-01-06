@@ -10,7 +10,8 @@
       "id": 2,
       "content": "Browser can execute only Javascript",
       "date": "2020-01-10T18:39:34.091Z",
-      "important": false
+      "important": false,
+      "lkm": 2
     },
     {
       "id": 3,
@@ -22,97 +23,50 @@
       "content": "Ensimmäinen muistiinpano",
       "date": "2021-11-30T14:45:56.895Z",
       "important": true,
-      "id": 4
+      "id": 4,
+      "lkm": null
     },
     {
       "content": "Toinen muistiinpano",
       "date": "2021-11-30T16:19:48.661Z",
       "important": true,
-      "id": 5
+      "id": 5,
+      "lkm": 3
     },
     {
       "content": "Kolmas muistiinpano",
       "date": "2021-11-30T17:45:33.936Z",
       "important": true,
-      "lkm": 6,
+      "lkm": 7,
       "id": 6
     },
     {
       "content": "yksi",
       "date": "2021-11-30T18:13:51.758Z",
       "important": true,
-      "lkm": 18,
+      "lkm": 26,
       "id": 7
     },
     {
       "content": "Uusi muistiinpano",
       "date": "2021-12-02T07:37:02.961Z",
       "important": true,
-      "lkm": 2,
-      "id": 8
-    },
-    {
-      "content": "",
-      "date": "2021-12-02T07:37:22.666Z",
-      "important": false,
       "lkm": 4,
-      "id": 9
-    },
-    {
-      "content": "t",
-      "date": "2022-01-03T18:03:41.253Z",
-      "important": false,
-      "lkm": 1,
-      "id": 10
+      "id": 8
     },
     {
       "content": "Neljäs muistiinpano",
       "date": "2022-01-03T18:04:04.233Z",
       "important": true,
-      "lkm": 1,
+      "lkm": 9,
       "id": 11
-    },
-    {
-      "content": "n",
-      "date": "2022-01-03T18:04:16.130Z",
-      "important": false,
-      "lkm": 5,
-      "id": 12
-    },
-    {
-      "content": "Neljäs muistiinpan",
-      "date": "2022-01-03T18:32:34.139Z",
-      "important": true,
-      "lkm": 1,
-      "id": 13
-    },
-    {
-      "content": "Neljäs muistiinpa",
-      "date": "2022-01-03T18:34:15.489Z",
-      "important": false,
-      "lkm": 1,
-      "id": 14
-    },
-    {
-      "content": "Neljäs muistiinp",
-      "date": "2022-01-05T10:05:14.154Z",
-      "important": false,
-      "lkm": 1,
-      "id": 15
     },
     {
       "content": "Uusi",
       "date": "2022-01-05T10:06:17.061Z",
       "important": false,
-      "lkm": 1,
+      "lkm": 2,
       "id": 16
-    },
-    {
-      "content": "Uus",
-      "date": "2022-01-05T10:06:29.061Z",
-      "important": true,
-      "lkm": 1,
-      "id": 17
     },
     {
       "content": "Yksi muistiinpano",
@@ -120,6 +74,13 @@
       "important": true,
       "lkm": 1,
       "id": 18
+    },
+    {
+      "content": "Täysin uusi",
+      "date": "2022-01-06T19:03:06.078Z",
+      "important": true,
+      "lkm": 13,
+      "id": 22
     }
   ]
 }
