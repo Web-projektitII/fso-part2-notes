@@ -58,7 +58,7 @@
       "content": "Neljäs muistiinpano",
       "date": "2022-01-03T18:04:04.233Z",
       "important": true,
-      "lkm": 9,
+      "lkm": 11,
       "id": 11
     },
     {
@@ -79,14 +79,14 @@
       "content": "Täysin uusi",
       "date": "2022-01-06T19:03:06.078Z",
       "important": true,
-      "lkm": 15,
+      "lkm": 18,
       "id": 22
     },
     {
       "content": "Kaksi",
       "date": "2022-01-06T20:49:19.568Z",
       "important": true,
-      "lkm": 1,
+      "lkm": 3,
       "id": 23
     }
   ]

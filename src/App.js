@@ -8,7 +8,7 @@ import noteService from './services/notes'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
-  const [readyNote, setReadyNote] = useState('')
+  //const [readyNote, setReadyNote] = useState('')
   const [showAll, setShowAll] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
   let timerID = useRef(null);
@@ -79,17 +79,26 @@ const App = () => {
         })
       }
 
+  const addReadyNote = (ready) => {
+    const note = loytyi(ready);
+    if (note) {
+      console.log(`Löytyi:${note.content} (${note.lkm + 1})`)
+      updateNoteDelay(note);
+      }
+    else {
+      addNoteDelay(ready);
+      }   
+    }    
+
   const addNote = event => {
-    event.preventDefault();
+    if (event) event.preventDefault();
     if (timerID.current) clearTimeout(timerID.current)
     if (!newNote) {
       alert('Virhe: muistiinpano puuttuu.')
       return;
       }
-    const note = loytyi(newNote);
-    if (note) updateNoteDelay(note);
-    else addNoteDelay(newNote);
-  }
+    addReadyNote(newNote);  
+    }
 
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
@@ -122,18 +131,20 @@ const App = () => {
 
   const handleNoteChange = event => {
     let value = event.target.value;
-    startInputTimer(value);
     console.log(`handleNoteChange:${value}`);
+    startInputTimer(value);
     setNewNote(value);
     }
 
   const startInputTimer = note => {
-      if (timerID.current) clearTimeout(timerID.current)
+    if (timerID.current) clearTimeout(timerID.current)
+    if (note) {
       timerID.current = setTimeout(() => {
-        setReadyNote(note)},2500)
+      addReadyNote(note)},2500)
       }
+    }
     
-  if (readyNote) {
+  /*if (readyNote) {
     const note = loytyi(readyNote);
     if (note) {
       console.log(`Löytyi:${note.content} (${note.lkm + 1})`)
@@ -144,7 +155,7 @@ const App = () => {
       addNoteDelay(readyNote);
       setReadyNote('');
       }   
-    }
+    }*/
 
   const notesToShow = showAll
   ? notes
