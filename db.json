@@ -24,7 +24,7 @@
       "date": "2021-11-30T14:45:56.895Z",
       "important": true,
       "id": 4,
-      "lkm": null
+      "lkm": 2
     },
     {
       "content": "Toinen muistiinpano",
@@ -37,14 +37,14 @@
       "content": "Kolmas muistiinpano",
       "date": "2021-11-30T17:45:33.936Z",
       "important": true,
-      "lkm": 7,
+      "lkm": 9,
       "id": 6
     },
     {
       "content": "yksi",
       "date": "2021-11-30T18:13:51.758Z",
       "important": true,
-      "lkm": 27,
+      "lkm": 28,
       "id": 7
     },
     {
@@ -64,7 +64,7 @@
     {
       "content": "Uusi",
       "date": "2022-01-05T10:06:17.061Z",
-      "important": false,
+      "important": true,
       "lkm": 2,
       "id": 16
     },
@@ -79,7 +79,7 @@
       "content": "Täysin uusi",
       "date": "2022-01-06T19:03:06.078Z",
       "important": true,
-      "lkm": 18,
+      "lkm": 19,
       "id": 22
     },
     {
