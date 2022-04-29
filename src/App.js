@@ -8,7 +8,8 @@ import noteService from './services/notes'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
-  //const [readyNote, setReadyNote] = useState('')
+  // const [readyNote, setReadyNote] = useState('')
+  const [ready, setReady] = useState(true)
   const [showAll, setShowAll] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
   let timerID = useRef(null);
@@ -20,9 +21,9 @@ const App = () => {
       .getAll()
       .then(initialNotes => {
       setNotes(initialNotes)
-      console.log(`muutettu notes-tilaa: ${initialNotes}`)
+      console.log(`muutettu notes-tilaa:`,initialNotes)
     })
-    }, [])
+    }, [ready])
 
   /*useEffect(() => {
   console.log(`running useEffect, valmis note:${readyNote}`);
@@ -117,6 +118,24 @@ const App = () => {
     })    
   }
 
+  const deleteNote = id => {
+    console.log(`deleteNote, id:${id}`)
+    const note = notes.find(n => n.id === id)
+    noteService.poista(id)
+    .then(() => {
+      console.log(notes)
+      setReady(!ready)
+      // setNotes(notes.map(note => note.id !== id))
+      })
+    .catch(error => {
+      setErrorMessage(
+        `Note ${error}, '${note.content}' was already removed from server`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    })    
+  }
   /*const checkDatalist = (value) => {
     console.log(`checkDataList ${value}`)
     const o = document.getElementById('valinnat').options;
@@ -177,6 +196,7 @@ const App = () => {
               key={note.id}
               note={note} 
               toggleImportance={() => toggleImportanceOf(note.id)}
+              deleteNote={() => deleteNote(note.id)}
             />
         )}
       </ul>

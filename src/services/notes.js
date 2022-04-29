@@ -27,6 +27,12 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-const exports = {getAll, create, update}
+const poista = id => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  //console.log(`poista:${baseUrl}/${id}`)
+  return request
+}
+
+const exports = {getAll, create, update, poista}
 export default exports
   
