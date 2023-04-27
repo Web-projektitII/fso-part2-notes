@@ -11,9 +11,9 @@ const Note = ({ note, toggleImportance, deleteNote }) => {
 
   return (
     <li className='note'>
-      <span>{note.content}</span>
-      <span> ({note.lkm}) </span> 
-      <button onClick={toggleImportance}>{label}</button>
+      <span className='note-span'>{note.content}</span>
+      <span className='note-lkm'> ({note.lkm}) </span> 
+      <button className='note-button' onClick={toggleImportance}>{label}</button>
       {/*<IconButton onClick={deleteNote} size="small" color="secondary">
       <DeleteIcon />
       </IconButton> */}

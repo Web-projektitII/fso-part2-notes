@@ -37,14 +37,14 @@
     {
       "content": "yksi",
       "date": "2021-11-30T18:13:51.758Z",
-      "important": true,
+      "important": false,
       "lkm": 28,
       "id": 7
     },
     {
       "content": "Uusi muistiinpano",
       "date": "2021-12-02T07:37:02.961Z",
-      "important": true,
+      "important": false,
       "lkm": 4,
       "id": 8
     },
@@ -52,7 +52,7 @@
       "content": "Neljäs muistiinpano",
       "date": "2022-01-03T18:04:04.233Z",
       "important": true,
-      "lkm": 11,
+      "lkm": 12,
       "id": 11
     },
     {
@@ -80,7 +80,7 @@
       "content": "Kaksi",
       "date": "2022-01-06T20:49:19.568Z",
       "important": true,
-      "lkm": 5,
+      "lkm": 6,
       "id": 23
     }
   ]

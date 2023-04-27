@@ -190,7 +190,7 @@ const App = () => {
           show {showAll ? 'important' : 'all' }
         </button>
       </div>   
-      <ul>
+      <ol>
         {notesToShow.map(note => 
             <Note
               key={note.id}
@@ -199,7 +199,7 @@ const App = () => {
               deleteNote={() => deleteNote(note.id)}
             />
         )}
-      </ul>
+      </ol>
       <form id="lomake" onSubmit={addNote}>
         <Datalist
           value={newNote}

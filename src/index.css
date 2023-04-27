@@ -3,10 +3,44 @@ h1 {
   font-style: italic;
 }
 
+ol {
+  padding:0 30px;
+  list-style-position:outside;
+}
+
 .note {
-  color: grey;
-  padding-top: 3px;
-  font-size: 15px;
+  color: eee;
+  white-space:nowrap;
+  margin-top:4px;
+}
+
+.note::marker {
+  color: blue;
+}
+
+.note-span {
+  width:300px;
+  display:inline-block;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  vertical-align:top;
+  margin-left:10px;
+}
+
+.note-span:hover {
+  overflow:visible;
+  white-space:normal;
+}
+
+.note-lkm {
+  width:20px;
+  display:inline-block;
+  text-align:right;
+}
+
+.note-button {
+  width:150px;
 }
 
 .site-container {
